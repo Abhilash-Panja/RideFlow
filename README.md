@@ -5,29 +5,29 @@ RideFlow is a ride-hailing platform built as a set of independent Spring Boot mi
 ## Architecture
 
 ```
-                        ┌─────────────────────┐
-                        │   Service-Discovery  │  (Eureka, :8761)
-                        └──────────┬───────────┘
-                                   │ registers with
+                         ┌────────────────────┐
+                        │   Service-Discovery │  (Eureka, :8761)
+                        └─────────┬───────────┘
+                                  │ registers with
         ┌───────────────┬─────────┼─────────────┬───────────────┐
-        │               │         │             │               │
-┌───────▼──────┐ ┌───────▼─────┐ ┌▼────────────┐ ┌▼─────────────┐
-│ Auth Service │ │  Location   │ │  Booking     │ │ Socket Server│
-│   :8080      │ │  Service    │ │  Service     │ │   :3002      │
-│              │ │   :7777     │ │   :8001      │ │              │
-└──────┬───────┘ └──────┬──────┘ └──────┬───────┘ └──────┬───────┘
-       │                │               │                │
-       │         ┌──────▼──────┐        │         ┌──────▼──────┐
-       │         │   Review    │        │         │    Kafka    │
-       │         │   Service   │        │         │  (events)   │
-       │         │   :8081     │        │         └─────────────┘
-       │         └─────────────┘        │
-       │                                │
-       └────────────────┬───────────────┴──────────┐
-                         │                          │
-                  ┌──────▼──────┐            ┌──────▼──────┐
-                  │    MySQL    │            │    Redis    │
-                  └─────────────┘            └─────────────┘
+        │               │         │             │               
+┌───────▼──────┐ ┌──────▼─────┐ ┌─▼──────────┐ ┌▼─────────────┐
+│ Auth Service │ │  Location  │ │  Booking   │ │ Socket Server│
+│   :8080      │ │  Service   │ │  Service   │ │   :3002      │
+│              │ │   :7777    │ │   :8001    │ │              │
+└──────┬───────┘ └──────┬─────┘ └──────┬─────┘ └──────┬───────┘
+       │                │              │              │
+       │         ┌──────▼──────┐       │         ┌────▼──────┐
+       │         │   Review    │       │         │    Kafka  │
+       │         │   Service   │       │         │  (events) │
+       │         │   :8081     │       │         └───────────┘
+       │         └─────────────┘       │
+       │                               │
+       └────────────────┬──────────────┴──────────┐
+                        │                         │
+                  ┌─────▼──────┐            ┌─────▼──────┐
+                  │    MySQL   │            │    Redis   │
+                  └────────────┘            └────────────┘
 
   All services share domain models via Rideflow-EntityService (published
   as a versioned library, not run as its own network service).
