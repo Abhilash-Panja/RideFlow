@@ -6,8 +6,8 @@ RideFlow is a ride-hailing platform built as a set of independent Spring Boot mi
 
 ```
                          ┌────────────────────┐
-                        │   Service-Discovery │  (Eureka, :8761)
-                        └─────────┬───────────┘
+                         │   Service-Discovery│  (Eureka, :8761)
+                         └─────────┬──────────┘
                                   │ registers with
         ┌───────────────┬─────────┼─────────────┬───────────────┐
         │               │         │             │               
