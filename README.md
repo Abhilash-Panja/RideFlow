@@ -159,12 +159,12 @@ The services currently reference different snapshots of the shared entity librar
 
 | Consumer | Current shared-model dependency |
 |---|---|
-| Auth Service | `0.0.2-SNAPSHOT` |
-| Review Service | `0.0.2-SNAPSHOT` |
-| Location Service | `0.0.4-SNAPSHOT` |
-| Socket Server | `0.0.4-SNAPSHOT` |
-| Booking Service | `0.0.5-SNAPSHOT` |
-| Entity Service repo | `0.0.5-SNAPSHOT` |
+| Auth Service | `0.0.7-SNAPSHOT` |
+| Review Service | `0.0.7-SNAPSHOT` |
+| Location Service | `0.0.7-SNAPSHOT` |
+| Socket Server | `0.0.7-SNAPSHOT` |
+| Booking Service | `0.0.7-SNAPSHOT` |
+| Entity Service repo | `0.0.7-SNAPSHOT` |
 
 On a clean machine, a service cannot resolve a historical snapshot unless that version is available in Maven Local or another configured Maven repository.
 
