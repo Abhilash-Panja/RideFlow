@@ -7,47 +7,26 @@ This repository is the **umbrella / navigation repository** for the platform. Th
 ## Architecture
 
 ```mermaid
-flowchart LR
-    Client[Client / API Consumer]
+sequenceDiagram
+    participant Client
+    participant Booking
+    participant Eureka
+    participant Location
+    participant Socket
+    participant Driver
 
-    Eureka[Service Discovery<br/>Eureka :8761]
-    Auth[Auth Service<br/>:8080]
-    Location[Location Service<br/>:7777]
-    Booking[Booking Service<br/>:8001]
-    Socket[Socket Server<br/>:3002]
-    Review[Review Service<br/>:8081]
-    Entity[Rideflow Entity Service<br/>Shared Maven Library]
+    Client->>Booking: Create booking
+    Booking->>Eureka: Discover Location Service
+    Eureka-->>Booking: Location service URL
+    Booking->>Location: Find nearby drivers
+    Location-->>Booking: Nearby drivers
 
-    Redis[(Redis)]
-    MySQL[(MySQL / uberdb)]
-    Kafka[(Kafka)]
-
-    Client --> Auth
-    Client --> Booking
-    Client --> Review
-    Client --> Socket
-
-    Location --> Eureka
-    Booking --> Eureka
-    Socket --> Eureka
-
-    Booking -->|Eureka + Retrofit| Location
-    Booking -->|Eureka + Retrofit| Socket
-    Socket -->|booking update| Booking
-
-    Location --> Redis
-    Booking --> MySQL
-    Auth --> MySQL
-    Review --> MySQL
-    Socket --> MySQL
-
-    Socket <--> Kafka
-
-    Entity -.shared models.-> Auth
-    Entity -.shared models.-> Location
-    Entity -.shared models.-> Booking
-    Entity -.shared models.-> Review
-    Entity -.shared models.-> Socket
+    Booking->>Eureka: Discover Socket Server
+    Eureka-->>Booking: Socket server URL
+    Booking->>Socket: Send ride request
+    Socket-->>Driver: Broadcast new ride
+    Driver-->>Socket: Accept / reject ride
+    Socket->>Booking: Update booking
 ```
 
 > **Current-code note:** Location Service, Booking Service, and Socket Server are Eureka clients. Auth Service and Review Service do not currently register with Eureka.
