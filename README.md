@@ -490,3 +490,10 @@ Review
 ---
 
 RideFlow is a backend/microservices learning project built around a realistic ride-hailing domain.
+
+
+---
+
+## Interview Guide
+
+For a plain-English project explanation, demo flow, common interview questions, and a learning roadmap, see [INTERVIEW_GUIDE.md](./INTERVIEW_GUIDE.md).
